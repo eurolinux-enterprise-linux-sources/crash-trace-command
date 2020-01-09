@@ -4,13 +4,13 @@
 Summary: trace extension module for the crash utility
 Name: crash-trace-command
 Version: 1.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
 URL: http://people.redhat.com/anderson/extensions/trace.c
-Vendor: Fujitsu Limited
-Packager: Lai Jiangshan <laijs@cn.fujitsu.com>
+# Vendor: Fujitsu Limited
+# Packager: Lai Jiangshan <laijs@cn.fujitsu.com>
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 %{ix86} ppc64 ia64 s390 s390x
 Buildroot: %{_tmppath}/%{name}-root
@@ -44,6 +44,10 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
+* Thu Mar 20 2014 Dave Anderson <anderson@redhat.com> - 1.0-5
+- Comment out Vendor and Packager lines.
+  Resolves: rhbz#895899
+
 * Wed Feb  8 2012 Dave Anderson <anderson@redhat.com> - 1.0-4
 - Build with RPM_OPT_FLAGS.
   Resolves: rhbz#729018
