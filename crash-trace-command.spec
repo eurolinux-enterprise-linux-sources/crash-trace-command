@@ -4,7 +4,7 @@
 Summary: Trace extension module for the crash utility
 Name: crash-trace-command
 Version: 2.0
-Release: 10%{?dist}
+Release: 12%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
@@ -24,6 +24,9 @@ Patch4: ARM64.patch
 Patch5: linux_3.10_support.patch
 Patch6: ppc64le.patch
 Patch7: linux_4.2_support.patch
+Patch8: TRACE_EVENT_FL_TRACEPOINT_flag.patch
+Patch9: big_endian_nr_pages.patch
+Patch10: ppc64_ring_buffer_read.patch
 
 %description
 Command for reading ftrace data from a dumpfile.
@@ -38,6 +41,9 @@ Command for reading ftrace data from a dumpfile.
 %patch5 -p1 -b linux_3.10_support.patch
 %patch6 -p1 -b ppc64le.patch
 %patch7 -p1 -b linux_4.2_support.patch
+%patch8 -p1 -b TRACE_EVENT_FL_TRACEPOINT_flag.patch
+%patch9 -p1 -b big_endian_nr_pages.patch
+%patch10 -p1 -b ppc64_ring_buffer_read.patch
 
 %build
 make
@@ -55,6 +61,13 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
+* Sun Apr 16 2017 Dave Anderson <anderson@redhat.com> - 2.0.12
+- Differentiate ppc64 .ring_buffer_read text symbol from ring_buffer_read data symbol
+- Fix for ring_buffer_per_cpu.nr_pages size change on big-endian systems 
+- Fix for Linux 4.7 change to the TRACE_EVENT_FL_TRACEPOINT flag
+  Resolves: rhbz#1441914
+  Resolves: rhbz#1440726
+
 * Thu Feb 25 2016 Dave Anderson <anderson@redhat.com> - 2.0-10
 - Fix for ftrace symbol name changes in Linux 4.2 
   Resolves: rhbz#1265553
