@@ -4,7 +4,7 @@
 Summary: Trace extension module for the crash utility
 Name: crash-trace-command
 Version: 2.0
-Release: 14%{?dist}
+Release: 9%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
@@ -14,10 +14,8 @@ URL: http://people.redhat.com/anderson/extensions/%{name}-%{version}.tar.gz
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 %{ix86} ppc64 ia64 s390 s390x aarch64 ppc64le
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: zlib-devel lzo-devel snappy-devel
-BuildRequires: crash-devel >= 7.2.0-2
+BuildRequires: crash-devel zlib-devel lzo-devel snappy-devel
 Requires: trace-cmd
-Requires: crash >= 7.2.0-2
 Patch0: trace_compiler_warnings.patch
 Patch1: replace_obsolete_init_and_fini.patch
 Patch2: sigsegv_on_calloc_failure.patch
@@ -25,11 +23,6 @@ Patch3: initialize_trace_dat.patch
 Patch4: ARM64.patch
 Patch5: linux_3.10_support.patch
 Patch6: ppc64le.patch
-Patch7: linux_4.2_support.patch
-Patch8: TRACE_EVENT_FL_TRACEPOINT_flag.patch
-Patch9: big_endian_nr_pages.patch
-Patch10: ppc64_ring_buffer_read.patch
-Patch11: ftrace_event_call_rh_data.patch
 
 %description
 Command for reading ftrace data from a dumpfile.
@@ -43,11 +36,6 @@ Command for reading ftrace data from a dumpfile.
 %patch4 -p1 -b ARM64.patch
 %patch5 -p1 -b linux_3.10_support.patch
 %patch6 -p1 -b ppc64le.patch
-%patch7 -p1 -b linux_4.2_support.patch
-%patch8 -p1 -b TRACE_EVENT_FL_TRACEPOINT_flag.patch
-%patch9 -p1 -b big_endian_nr_pages.patch
-%patch10 -p1 -b ppc64_ring_buffer_read.patch
-%patch11 -p1 -b ftrace_event_call_rh_data.patch
 
 %build
 make
@@ -65,26 +53,6 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
-* Mon Aug 20 2018 Dave Anderson <anderson@redhat.com> - 2.0-14
-- Fix for ftrace_event_call data structure change
-  Resolves: rhbz#1596549
-
-* Wed Dec  6 2017 Dave Anderson <anderson@redhat.com> - 2.0.13
-- Build requires crash-devel-7.2.0-2 and usage requires crash-7.2.0-2
-  because of load_module structure change.
-  Resolves: rhbz#1520825
-
-* Sun Apr 16 2017 Dave Anderson <anderson@redhat.com> - 2.0.12
-- Differentiate ppc64 .ring_buffer_read text symbol from ring_buffer_read data symbol
-- Fix for ring_buffer_per_cpu.nr_pages size change on big-endian systems 
-- Fix for Linux 4.7 change to the TRACE_EVENT_FL_TRACEPOINT flag
-  Resolves: rhbz#1441914
-  Resolves: rhbz#1440726
-
-* Thu Feb 25 2016 Dave Anderson <anderson@redhat.com> - 2.0-10
-- Fix for ftrace symbol name changes in Linux 4.2 
-  Resolves: rhbz#1265553
-
 * Tue Sep 02 2014 Dave Anderson <anderson@redhat.com> - 2.0-9
 - Add ppc64le support.
   Resolves: rhbz#1123995
