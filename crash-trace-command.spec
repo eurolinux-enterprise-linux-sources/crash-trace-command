@@ -4,7 +4,7 @@
 Summary: Trace extension module for the crash utility
 Name: crash-trace-command
 Version: 2.0
-Release: 13%{?dist}
+Release: 14%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
@@ -29,6 +29,7 @@ Patch7: linux_4.2_support.patch
 Patch8: TRACE_EVENT_FL_TRACEPOINT_flag.patch
 Patch9: big_endian_nr_pages.patch
 Patch10: ppc64_ring_buffer_read.patch
+Patch11: ftrace_event_call_rh_data.patch
 
 %description
 Command for reading ftrace data from a dumpfile.
@@ -46,6 +47,7 @@ Command for reading ftrace data from a dumpfile.
 %patch8 -p1 -b TRACE_EVENT_FL_TRACEPOINT_flag.patch
 %patch9 -p1 -b big_endian_nr_pages.patch
 %patch10 -p1 -b ppc64_ring_buffer_read.patch
+%patch11 -p1 -b ftrace_event_call_rh_data.patch
 
 %build
 make
@@ -63,6 +65,10 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
+* Mon Aug 20 2018 Dave Anderson <anderson@redhat.com> - 2.0-14
+- Fix for ftrace_event_call data structure change
+  Resolves: rhbz#1596549
+
 * Wed Dec  6 2017 Dave Anderson <anderson@redhat.com> - 2.0.13
 - Build requires crash-devel-7.2.0-2 and usage requires crash-7.2.0-2
   because of load_module structure change.
