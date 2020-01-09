@@ -4,7 +4,7 @@
 Summary: trace extension module for the crash utility
 Name: crash-trace-command
 Version: 1.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
@@ -17,6 +17,7 @@ Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: crash-devel zlib-devel
 Patch0: s390.patch
 Patch1: trace_show_segv.patch
+Patch2: build_with_RPM_OPT_FLAGS.patch
 
 %description
 Command for reading ftrace data from a dumpfile.
@@ -25,6 +26,7 @@ Command for reading ftrace data from a dumpfile.
 %setup -n %{name}-%{version}
 %patch0 -p1 -b s390.patch
 %patch1 -p1 -b trace_show_segv.patch
+%patch2 -p1 -b build_with_RPM_OPT_FLAGS.patch
 
 %build
 make
@@ -42,6 +44,10 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
+* Wed Feb  8 2012 Dave Anderson <anderson@redhat.com> - 1.0-4
+- Build with RPM_OPT_FLAGS.
+  Resolves: rhbz#729018
+
 * Wed Jun  9 2010 Dave Anderson <anderson@redhat.com> - 1.0-3
 - Remove trace_dump.patch, which requires a kernel later than
   the RHEL6 base of 2.6.32.
