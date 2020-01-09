@@ -4,7 +4,7 @@
 Summary: Trace extension module for the crash utility
 Name: crash-trace-command
 Version: 2.0
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: %{name}-%{version}.tar.gz
@@ -14,8 +14,10 @@ URL: http://people.redhat.com/anderson/extensions/%{name}-%{version}.tar.gz
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 %{ix86} ppc64 ia64 s390 s390x aarch64 ppc64le
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: crash-devel zlib-devel lzo-devel snappy-devel
+BuildRequires: zlib-devel lzo-devel snappy-devel
+BuildRequires: crash-devel >= 7.2.0-2
 Requires: trace-cmd
+Requires: crash >= 7.2.0-2
 Patch0: trace_compiler_warnings.patch
 Patch1: replace_obsolete_init_and_fini.patch
 Patch2: sigsegv_on_calloc_failure.patch
@@ -61,6 +63,11 @@ rm -rf %{buildroot}
 %doc COPYING
 
 %changelog
+* Wed Dec  6 2017 Dave Anderson <anderson@redhat.com> - 2.0.13
+- Build requires crash-devel-7.2.0-2 and usage requires crash-7.2.0-2
+  because of load_module structure change.
+  Resolves: rhbz#1520825
+
 * Sun Apr 16 2017 Dave Anderson <anderson@redhat.com> - 2.0.12
 - Differentiate ppc64 .ring_buffer_read text symbol from ring_buffer_read data symbol
 - Fix for ring_buffer_per_cpu.nr_pages size change on big-endian systems 
