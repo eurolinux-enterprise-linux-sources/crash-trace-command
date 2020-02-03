@@ -1,0 +1,15 @@
+*** crash-trace-command-2.0/Makefile.orig
+--- crash-trace-command-2.0/Makefile
+***************
+*** 30,35 ****
+--- 30,39 ----
+    TARGET=ARM64
+    TARGET_CFLAGS=
+  endif
++ ifeq ($(shell arch), mips64)
++   TARGET=MIPS
++   TARGET_CFLAGS=
++ endif
+  
+  INCDIR=/usr/include/crash
+  
